@@ -96,3 +96,9 @@ class FilePage(BaseAction):
     def clear_text_input_text(self, loc, text):
         self.clear_text(loc)
         self.input_text(loc, text)
+
+    # 根据名字进入对应的文件夹
+    def entry_dir_with_name(self, dir_name):
+        loc = By.XPATH, "text," + dir_name
+        self.scroll_page_until_loc(loc)
+        self.click(loc)
