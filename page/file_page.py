@@ -58,6 +58,9 @@ class FilePage(BaseAction):
     # 已存在 特征
     already_exist = By.XPATH, "text,已存在,1"
 
+    # 文件名的特征
+    file_loc = By.ID, "com.cyanogenmod.filemanager:id/navigation_view_item_name"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -149,6 +152,11 @@ class FilePage(BaseAction):
         self.click(self.side_menu_button)
         time.sleep(1)
         self.click(self.sdcard_button)
+
+    def get_current_first_dir_name(self):
+        return self.find_element(self.file_loc).get_attribute("text")
+
+
 
 
 

@@ -32,8 +32,7 @@ class BaseAction:
             loc_value = self.make_xpath_with_feature(loc_value)
         return WebDriverWait(self.driver, time, poll).until(lambda x: x.find_elements(loc_by, loc_value))
 
-    # 滑动当前页面到某个元素出现
-    def scroll_page_until_loc(self, loc, direction="down"):
+    def scroll_page_one_time(self, direction="down"):
         window_size = self.driver.get_window_size()
         window_height = window_size["height"]
         window_width = window_size["width"]
@@ -41,18 +40,23 @@ class BaseAction:
         start_y = end_y * 3
         center_x = window_width * 0.5
 
+        if direction == "down":
+            self.driver.swipe(center_x, start_y, center_x, end_y)
+        elif direction == "up":
+            self.driver.swipe(center_x, end_y, center_x, start_y)
+        else:
+            raise Exception("请输入正确的direction参数")
+
+
+    # 滑动当前页面到某个元素出现
+    def scroll_page_until_loc(self, loc, direction="down"):
         while True:
             try:
                 self.find_element(loc)
                 break
             except Exception:
-                if direction == "down":
-                    self.driver.swipe(center_x, start_y, center_x, end_y)
-                elif direction == "up":
-                    self.driver.swipe(center_x, end_y, center_x, start_y)
-                else:
-                    raise Exception("请输入正确的direction参数")
 
+                self.scroll_page_one_time(direction)
                 time.sleep(1)
 
     def make_xpath_with_feature(self, feature):

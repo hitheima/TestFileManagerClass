@@ -1,4 +1,5 @@
 import os, sys, pytest
+
 sys.path.append(os.getcwd())
 
 from base.base_driver import init_driver
@@ -9,6 +10,31 @@ class TestFile:
     def setup(self):
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
+
+    def test_refresh(self):
+
+        # 进入sd卡
+        # self.file_page.entry_sdcard()
+
+        # 获取当前目录第一个文件夹的名字
+        first_dir_name = self.file_page.get_current_first_dir_name()
+        # 滚动半屏
+        self.file_page.scroll_page_one_time()
+        # 获取当前目录第一个文件夹的名字 和 之前保存的对比
+        temp = self.file_page.get_current_first_dir_name()
+        if temp == first_dir_name:
+            # 如果一直，说明屏幕没有滑动，文件过少
+            assert 0, "当前滚动没有成功"
+        else:
+            # 如果不一致 点击刷新
+            self.file_page.click_operation()
+            self.file_page.click_refresh()
+
+
+        # 判断当前目录第一个文件夹的名字 和 之前保存的对比
+        after_first_dir_name = self.file_page.get_current_first_dir_name()
+        assert first_dir_name == after_first_dir_name
+
 
     @pytest.mark.skipif(True, reason="done")
     def test_first(self):
