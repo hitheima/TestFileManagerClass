@@ -46,6 +46,15 @@ class FilePage(BaseAction):
     # cacnel
     cancel_button = By.XPATH, "text,取消"
 
+    # 侧边栏按钮
+    side_menu_button = By.ID, "android:id/home"
+    
+    # sdcard 特征
+    sdcard_button = By.XPATH, "text,内部存储设备"
+
+    # 移动选择项
+    move_select_button = By.XPATH, "text,移动选择项"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -86,6 +95,10 @@ class FilePage(BaseAction):
     def click_set_as_home(self):
         self.click(self.set_as_home_button)
 
+    # 点击移动选择项
+    def click_move_select(self):
+        self.click(self.move_select_button)
+
     # 根据文件名创建对应的文件夹
     def create_dir_with_name(self, dir_name):
         self.click_operation()
@@ -110,5 +123,11 @@ class FilePage(BaseAction):
         loc = By.XPATH, "text," + dir_name
         self.scroll_page_until_loc(loc)
         self.click(loc)
+
+    def entry_sdcard(self):
+        self.click(self.side_menu_button)
+        time.sleep(1)
+        self.click(self.sdcard_button)
+
 
 
