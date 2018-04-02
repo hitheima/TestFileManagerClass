@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, time
 sys.path.append(os.getcwd())
 
 from base.base_action import BaseAction
@@ -93,6 +93,14 @@ class FilePage(BaseAction):
         self.clear_text_input_text(self.first_edit_text, dir_name)
         self.click(self.ok_button)
 
+    # 根据文件名创建对应的文件
+    def create_file_with_name(self, file_name):
+        self.click_operation()
+        self.click_new_file()
+        self.clear_text_input_text(self.first_edit_text, file_name)
+        self.click(self.ok_button)
+        time.sleep(1)
+
     def clear_text_input_text(self, loc, text):
         self.clear_text(loc)
         self.input_text(loc, text)
@@ -102,3 +110,5 @@ class FilePage(BaseAction):
         loc = By.XPATH, "text," + dir_name
         self.scroll_page_until_loc(loc)
         self.click(loc)
+
+

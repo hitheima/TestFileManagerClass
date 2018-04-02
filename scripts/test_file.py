@@ -18,9 +18,9 @@ class TestFile:
         # self.file_page.create_dir_with_name("aaa")
         # 进入zzz
         self.file_page.entry_dir_with_name("zzz")
-
-
         # 创建1-20.txt
+        for i in range(20):
+            self.file_page.create_file_with_name(str(i + 1) + ".txt")
         # 全选
         # 进入aaa
         # 移动选择项
