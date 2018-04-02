@@ -55,6 +55,9 @@ class FilePage(BaseAction):
     # 移动选择项
     move_select_button = By.XPATH, "text,移动选择项"
 
+    # 已存在 特征
+    already_exist = By.XPATH, "text,已存在,1"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -104,15 +107,33 @@ class FilePage(BaseAction):
         self.click_operation()
         self.click_new_dir()
         self.clear_text_input_text(self.first_edit_text, dir_name)
-        self.click(self.ok_button)
+
+        try:
+            self.find_element(self.already_exist)
+            self.click(self.cancel_button)
+            self.click(self.cancel_button)
+        except Exception:
+            self.click(self.ok_button)
+        time.sleep(1)
 
     # 根据文件名创建对应的文件
     def create_file_with_name(self, file_name):
         self.click_operation()
         self.click_new_file()
         self.clear_text_input_text(self.first_edit_text, file_name)
-        self.click(self.ok_button)
+
+        try:
+            self.find_element(self.already_exist)
+            self.click(self.cancel_button)
+            self.click(self.cancel_button)
+            return False
+        except Exception:
+            self.click(self.ok_button)
+            return True
         time.sleep(1)
+
+    def is_file_already_exist(self, file_name):
+        return not self.create_file_with_name(file_name)
 
     def clear_text_input_text(self, loc, text):
         self.clear_text(loc)
