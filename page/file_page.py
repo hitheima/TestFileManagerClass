@@ -37,6 +37,15 @@ class FilePage(BaseAction):
     # set_as_home
     set_as_home_button = By.XPATH, "text,Set,1"
 
+    # first_edit_text(文件夹和文件都可以用)
+    first_edit_text = By.CLASS_NAME, "android.widget.EditText"
+
+    # ok
+    ok_button = By.XPATH, "text,确定"
+
+    # cacnel
+    cancel_button = By.XPATH, "text,取消"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -76,3 +85,14 @@ class FilePage(BaseAction):
     # set_as_home
     def click_set_as_home(self):
         self.click(self.set_as_home_button)
+
+    # 根据文件名创建对应的文件夹
+    def create_dir_with_name(self, dir_name):
+        self.click_operation()
+        self.click_new_dir()
+        self.clear_text_input_text(self.first_edit_text, dir_name)
+        self.click(self.ok_button)
+
+    def clear_text_input_text(self, loc, text):
+        self.clear_text(loc)
+        self.input_text(loc, text)
