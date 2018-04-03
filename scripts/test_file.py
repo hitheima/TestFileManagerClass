@@ -11,6 +11,20 @@ class TestFile:
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
 
+    def test_add_mark(self):
+        # 回到sdcard
+        self.file_page.entry_sdcard()
+        # 进入aaa目录
+        self.file_page.entry_dir_with_name("aaa")
+        # 点击加入书签
+        self.file_page.click_operation()
+        self.file_page.click_add_mark()
+        # 点击侧边栏
+        self.file_page.open_side_menu()
+        # 查找是否有aaa
+        assert self.file_page.is_exist_with_xpath_text("aaa")
+
+    @pytest.mark.skipif(True, reason="done")
     def test_property(self):
         # 获取当前目录的名字
         current_dir_name = self.file_page.get_current_dir_name()

@@ -154,8 +154,11 @@ class FilePage(BaseAction):
         self.scroll_page_until_loc(loc)
         self.click(loc)
 
-    def entry_sdcard(self):
+    def open_side_menu(self):
         self.click(self.side_menu_button)
+
+    def entry_sdcard(self):
+        self.open_side_menu()
         time.sleep(1)
         self.click(self.sdcard_button)
 
@@ -169,6 +172,14 @@ class FilePage(BaseAction):
 
     def get_properties_name(self):
         return self.find_element(self.properties_name).get_attribute("text")
+
+    def is_exist_with_xpath_text(self, text):
+        loc = By.XPATH, "text," + text
+        try:
+            self.find_element(loc)
+            return True
+        except Exception:
+            return False
 
 
 
