@@ -61,6 +61,12 @@ class FilePage(BaseAction):
     # 文件名的特征
     file_loc = By.ID, "com.cyanogenmod.filemanager:id/navigation_view_item_name"
 
+    # 目录id
+    breadcrumb_item = By.ID, "com.cyanogenmod.filemanager:id/breadcrumb_item"
+
+    # 属性名字  特征
+    properties_name = By.ID, "com.cyanogenmod.filemanager:id/fso_properties_name"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -156,6 +162,13 @@ class FilePage(BaseAction):
     def get_current_first_dir_name(self):
         return self.find_element(self.file_loc).get_attribute("text")
 
+    def get_current_dir_name(self):
+        breadcrumb_item_list = self.find_elements(self.breadcrumb_item)
+        last_index = len(breadcrumb_item_list) - 1
+        return breadcrumb_item_list[last_index].get_attribute("text")
+
+    def get_properties_name(self):
+        return self.find_element(self.properties_name).get_attribute("text")
 
 
 

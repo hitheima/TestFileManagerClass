@@ -11,6 +11,20 @@ class TestFile:
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
 
+    def test_property(self):
+        # 获取当前目录的名字
+        current_dir_name = self.file_page.get_current_dir_name()
+
+        # 点击属性
+        self.file_page.click_operation()
+        self.file_page.click_property()
+
+        # 获取属性上的文件夹的名字
+        properties_name = self.file_page.get_properties_name()
+
+        assert properties_name == current_dir_name
+
+    @pytest.mark.skipif(True, reason="done")
     def test_refresh(self):
 
         # 进入sd卡
